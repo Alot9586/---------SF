@@ -7,27 +7,20 @@ import numpy as np
 
 def random_predict(number: int = 1) -> int:
     """Рандомно угадываем число
-    Args:
 
+    Args:
         number (int, optional): Загаданное число. Defaults to 1.
 
     Returns:
         int: Число попыток
     """
     count = 0
-    Numax = 101
-    Numin = 1
-    number = np.random.randint(Numin, Numax)
 
     while True:
         count += 1
-        Numed = (Numin+Numax)//2  
-        if Numed > number:
-            Numax = Numed 
-        elif Numed < number:
-            Numin = Numed 
-        else:
-            break
+        predict_number = np.random.randint(1, 101)  # предполагаемое число
+        if number == predict_number:
+            break  # выход из цикла если угадали
     return count
 
 
@@ -41,7 +34,8 @@ def score_game(random_predict) -> int:
         int: среднее количество попыток
     """
     count_ls = []
-    random_array = np.random.randint(1, 101, size=(1000)) 
+    #np.random.seed(1)  # фиксируем сид для воспроизводимости
+    random_array = np.random.randint(1, 101, size=(1000))  # загадали список чисел
 
     for number in random_array:
         count_ls.append(random_predict(number))
@@ -50,4 +44,7 @@ def score_game(random_predict) -> int:
     print(f"Ваш алгоритм угадывает число в среднем за:{score} попыток")
     return score
 
-score_game(random_predict)
+
+if __name__ == "__main__":
+    # RUN
+    score_game(random_predict)
